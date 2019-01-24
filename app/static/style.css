@@ -1,0 +1,95 @@
+/* Customizing some stock bootstrap theming */
+
+/* Recipe Category header */
+#header nav {
+  text-align: right;
+}
+
+#header h1 {
+  text-align: center;
+}
+
+body {
+	margin-bottom: 25px;
+}
+/* Navbar */
+.navbar {
+	min-height: 45px;
+  width: 100%;
+}
+
+.navbar-nav {
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+a.navbar-brand {
+	font-family: 'Pacifico', cursive;
+	font-size: 2.5em;
+}
+
+a.navbar-brand p {
+	margin: 5px;
+	font-family: 'Poppins', sans-serif;
+	font-size: .5em;
+}
+/* Navbar - Dropdown */
+.dropdown-item {
+  margin-bottom: 15px;
+  padding: 10px;
+}
+.dropdown-menu hr {
+  border: none;
+}
+
+hr {
+  padding: 1px;
+  margin: 1px;
+  border-top: 2px solid #d1d1e0;
+}
+
+/* Tables */
+.table.table-responsive-md {
+	text-align: center;
+	border-collapse: collapse;
+	border-radius: 10px 10px 0 0;
+	overflow: hidden;
+}
+
+thead.thead-dark {
+	background-color: #5e5e5e;
+}
+
+th {
+	color: white;
+}
+
+/* Recipe Titling */
+h1 {
+	font-family: 'Poppins', sans-serif;
+}
+
+.recipe-list {
+	padding: 25px;
+	text-align: center;
+}
+
+.list-scroll ul {
+  list-style-type: none;
+	display: inline-block;
+  min-width: 200px;
+  max-width: auto;
+	text-align: left;
+	/*min-height: 200px;*/
+	max-height: 500px;
+	/*height: auto;*/
+	overflow: hidden;
+	overflow-y: scroll;
+}
+
+.cancel a:link {
+  color: red;
+}
+.cancel a:hover {
+  color: black;
+}

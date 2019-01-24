@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+  <div class="container-fluid" id="header">
+    <div class="col-sm-4"></div>
+
+    <div class="col-sm-4">
+          <nav aria-label="...">
+            <ul class="pager">
+              <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a href="{{ prev_url or '#' }}">
+                  <span aria-hidden="true">&#9666; </span>Back
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <h1 style="text-align: center">{{ head }}</h1>
+    </div>
+
+    <div class="col-sm-4"></div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+        <div class="container-fluid recipe-list">
+          <div class="col-sm-3">
+          </div>
+
+          <!-- Scroll Window -->
+          <div class="col-sm-6">
+          <div class="recipe-list container-fluid">
+            <div class="list-scroll">
+              <ul>
+            {% for recipe in recipes %}
+              <a href="{{ url_for('main.recipe_detail', recipe_id=recipe.id) }}"><p>{{ recipe.name }}</p></a>
+            {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3"></div>
+    </div>
+  </div>
+{% endblock %}

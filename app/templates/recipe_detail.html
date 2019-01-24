@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block app_content %}
+  <div class="container-fluid" id="header">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+          <nav aria-label="...">
+            <ul class="pager">
+              <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a href="{{ prev_url or '#' }}">
+                  <span aria-hidden="true">&#9666; </span>Back
+                </a>
+              </li>
+              {% if current_user.is_authenticated %}
+              <li class="nav-item active" style="float: right">
+                <a href="{{ url_for('main.edit_recipe', recipe_id=recipe.id) }}">
+                  Edit This Recipe
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+          </nav>
+
+          <h1 style="text-align: center">{{ recipe.name }}</h1>
+    </div>
+
+    <div class="col-sm-3"></div>
+  </div>
+  <div class="container">
+    <div class="col-sm-3">{#{{ referrer }}#}</div>
+    <div class="col-sm-6">
+      <em><h3 style="text-align: center">{{ recipe.type }}</h3></em>
+      <p style="text-align: center"><em>Main Ingredient: </em>{{ recipe.main_ingredient}}</p>
+      <div id="panel">
+        <table class="table table-responsive-md">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Prep Time</th>
+              <th scope="col">Number of Servings</th>
+              <th scope="col">Calories per Serving</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>{{ recipe.prep_time }}</td>
+                <td>{{ recipe.servings }}</td>
+                <td>{{ recipe.cal_p_serving }}</td>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+        <hr>
+        <h3><em>Ingredients</em></h3>
+        <ul>
+          {% for line in ingred %}  
+            <li style="margin: 3px">{{ line }}</li>
+          {% endfor %}
+        </ul>
+        <hr>
+        <h3><em>Instructions</em></h3>
+        <p style="white-space: pre-wrap;"> {{ recipe.note }}</p>
+        <hr>
+        <div class="container" style="padding-top: 15px"></div>
+        <p>Source: {{ recipe.source }} -- Date added: {{ recipe.date }}</p>
+    </div>
+    <div class="col-sm-6"></div>
+        {% if current_user.is_authenticated %}
+					<!--{#<ul style="list-style-type: none">
+          <li class="cancel" style="float:right;">
+            <a href="{{ url_for('main.delete_recipe', recipe_id=recipe.id) }}">
+              &times Delete Recipe
+            </a>
+          </li>
+					</ul>#}-->
+					<ul style="list-style-type: none">
+						<li class="cancel" style="float: right">
+							<a href="#" data-href="{{ url_for('main.delete_recipe', recipe_id=recipe.id) }}" data-toggle="modal" data-target="#confirm-delete">
+								&times Delete Recipe
+							</a>
+						</li>
+					</ul>
+						<!-- Confirmation/Cancel Delete Modal -->
+						<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="CancelDialog" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content" style="text-align: center">
+									<div class="modal-header">
+										<h2>Are you sure you want to delete {{ recipe.name }}?</h2>
+									</div>
+									<div class="modal-content"></div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+										<a class="btn btn-danger cancel" href="{{ url_for('main.delete_recipe', recipe_id=recipe.id) }}">Delete</a>
+									</div>
+								</div>
+							</div>
+						</div>
+	<!--<script>
+		$('#confirm-delete').on('show.bs.modal', function(e) {
+			$(this).find('.cancel').attr('href', $(e.relatedTarget).data('href'));
+		});
+	</script>-->
+						<!-- End Modal -->
+        {% endif %}
+  </div>
+{% endblock %}

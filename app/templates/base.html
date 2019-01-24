@@ -1,0 +1,127 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block head %}
+  {{super()}}
+  <link rel="stylesheet" href="{{ url_for('.static', filename='style.css') }}">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+{% endblock %}
+
+  {% block scripts %}
+  {{super()}}
+  {% endblock %}
+
+  {% block title %}
+    {{ 'DiRaffaele Family Recipes' }}
+  {% endblock %}
+
+
+{% block navbar %}
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#recipes-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{{ url_for('main.index') }}">DiRaffaele<br><p>Recipes</p></a>
+			</div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="recipes-navbar-collapse-1" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Categories &#9662
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{ url_for('main.category_view', head="Breakfast", category="Breakfast") }}">Breakfast</a><br>
+              <hr>
+              <a class="dropdown-item" href="{{ url_for('main.category_view', head="Sides", category="Side") }}">Sides</a><br>
+              <hr>
+              <a class="dropdown-item" href="{{ url_for('main.category_view', head="Main Dishes", category="Main") }}">Main Dishes</a><br>
+              <hr>
+              <a class="dropdown-item" href="{{ url_for('main.category_view', head="Appetizers", category="Starter") }}">Appetizers</a><br>
+              <hr>
+              <a class="dropdown-item" href="{{ url_for('main.category_view', head="Desserts", category="Dessert") }}">Desserts</a><br>
+              <hr>
+              <a class="dropdown-item" href="{{ url_for('main.category_view', head="Soups and Salads", category="SoupSalad") }}">Soup/Salad</a><br>
+              <hr>
+              <a class="dropdown-item" href="{{ url_for('main.category_view', head="Other", category="Other") }}">Other</a><br>
+            </div>
+          </li>
+				</ul>
+        <ul class="nav navbar-nav navbar-right">
+  <script>
+    dataList = $("recipe_list")
+    dataList.empty()
+  </script>
+					<li>
+						<form style="padding: 5px; margin: 2px; display: inline-block">
+							<p>&#x1F50D;  {{ search_form.search(list="recipe_list", id="") }}</p>
+						<datalist id="recipe_list">
+							{% for name in search_names %}
+								<option value="{{ name }}">
+							{% endfor %}
+						</datalist>
+						<input type="submit" style="display: none">
+						</form>
+					</li>
+        {% if current_user.is_authenticated %}
+          <li class="nav-item active">
+            <a href={{ url_for('main.add_new_recipe') }} class="nav-link mr-auto">+ Add New Recipe</a>
+          </li>
+					<li>
+						<a href={{ url_for('main.logout') }} class="nav-link mr-auto">Logout</a>
+          </li>
+        {% else %}
+          <li>
+            <!-- Button trigger login form modal
+            <button type="button" class="btn btn-primary" data-toggle="modal"
+            data-target="#loginModal">-->
+            <a href={{ url_for('main.login') }}><button type="button" class="btn btn-primary" value="Login">Login</button></a>
+            <!-- Modal
+            <div id="loginModal" class="modal fade" tabindex="-1">
+              <div class="modal-dialog" role="form">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 id="loginModalLabel" style="text-align: center" class="modal-title">Log In</h5>
+                    <button class="close mr-auto" data-dismiss="modal">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                      {#{{ wtf.quick_form(form, action=url_for('main.login')) }}#}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          End Modal -->
+          </li>
+        {% endif %}
+        </ul>
+
+      </div>
+		</div>
+	</nav>
+{% endblock %}
+
+{% block content %}
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+					<div class="alert alert-warning" style="text-align: center" role="alert">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  {% block app_content %}{% endblock %}
+{% endblock %}
