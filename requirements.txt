@@ -22,7 +22,7 @@ jdcal==1.4
 jedi==0.13.2
 Jinja2==2.10
 leather==0.3.3
-Mako==1.0.7
+Mako==1.2.2
 MarkupSafe==1.1.0
 openpyxl==2.5.12
 packaging==19.0
